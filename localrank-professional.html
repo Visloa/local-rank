@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalRank | India's Website Ranking Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%234f46e5"/><text x="50" y="62" font-size="55" text-anchor="middle" fill="white" font-family="Arial">L</text></svg>'>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .hero-bg {
+      background:
+        linear-gradient(135deg, rgba(17,24,39,.82), rgba(49,46,129,.72)),
+        url("https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1800&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+    .rank-badge {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      box-shadow: 0 10px 22px rgba(249, 115, 22, .24);
+      color: #fff;
+      font-weight: 800;
+    }
+    .table-row { transition: background-color .2s ease, transform .2s ease; }
+    .table-row:hover { background-color: #f8fafc; }
+    @media (min-width: 768px) { .table-row:hover { transform: translateX(6px); } }
+    .fade-in { animation: fadeInUp .65s ease forwards; opacity: 0; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-pop { animation: modalPop .28s ease; }
+    @keyframes modalPop {
+      from { transform: scale(.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-scroll { max-height: 90vh; overflow-y: auto; }
+    .mobile-card { display: none; }
+    @media (max-width: 639px) {
+      .desktop-table { display: none !important; }
+      .mobile-card { display: block; }
+    }
+    .ticker-wrap { overflow: hidden; white-space: nowrap; }
+    .ticker-inner { display: inline-flex; animation: ticker 32s linear infinite; }
+    .ticker-inner:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .fab-pulse { animation: pulse 2.4s ease infinite; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79,70,229,.42); }
+      50% { box-shadow: 0 0 0 14px rgba(79,70,229,0); }
+    }
+    input:focus, select:focus { outline: 2px solid #4f46e5; outline-offset: 1px; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-900">
+
+<header class="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center gap-4">
+    <div class="flex items-center gap-3 shrink-0">
+      <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-extrabold text-2xl">L</div>
+      <div>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">LocalRank</h1>
+        <p class="text-xs text-slate-500">India website discovery index</p>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+      <a href="#rankings" class="hover:text-indigo-600">Rankings</a>
+      <a href="#methodology" class="hover:text-indigo-600">Methodology</a>
+      <a href="#reviews" class="hover:text-indigo-600">Reviews</a>
+      <a href="#faq" class="hover:text-indigo-600">FAQ</a>
+    </nav>
+    <button onclick="showApplyModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-bold transition">
+      Apply Now
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero-bg text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 bg-white/12 border border-white/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
+          <i class="fa-solid fa-chart-line"></i>
+          Updated ranking showcase for 2026
+        </div>
+        <h2 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+          Discover India's most visible local websites.
+        </h2>
+        <p class="text-base sm:text-xl text-white/86 mt-5 leading-relaxed max-w-2xl">
+          LocalRank helps users explore trending Indian websites and gives website owners a professional place to improve visibility, credibility, and discovery.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-8">
+          <button onclick="showApplyModal()" class="bg-white text-slate-950 px-6 py-3.5 rounded-lg font-extrabold hover:bg-slate-100 transition">
+            Get Your Website Ranked
+          </button>
+          <a href="#rankings" class="border border-white/40 px-6 py-3.5 rounded-lg font-extrabold hover:bg-white/10 transition text-center">
+            View Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div>
+        <p class="text-2xl font-extrabold">10+</p>
+        <p class="text-xs sm:text-sm text-slate-500 font-semibold">Listed websites</p>
+      </div>
+      <div>
+        <p class="text-2xl font-extrabold">48 hrs</p>
+        <p class="text-xs sm:text-sm text-slate-500 font-semibold">Verification target</p>
+      </div>
+      <div>
+        <p class="text-2xl font-extrabold">4.8/5</p>
+        <p class="text-xs sm:text-sm text-slate-500 font-semibold">Client rating</p>
+      </div>
+      <div>
+        <p class="text-2xl font-extrabold">Weekly</p>
+        <p class="text-xs sm:text-sm text-slate-500 font-semibold">Ranking review</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+    <div class="ticker-wrap bg-slate-900 text-white rounded-xl py-3 mb-10">
+      <div class="ticker-inner">
+        <span class="mx-6 text-sm font-bold">Listing review fee: Rs. 14,500</span>
+        <span class="mx-6 text-sm font-bold">Manual verification before publishing</span>
+        <span class="mx-6 text-sm font-bold">Category-based website discovery</span>
+        <span class="mx-6 text-sm font-bold">Submission status stored locally for admin export</span>
+        <span class="mx-6 text-sm font-bold">Listing review fee: Rs. 14,500</span>
+        <span class="mx-6 text-sm font-bold">Manual verification before publishing</span>
+        <span class="mx-6 text-sm font-bold">Category-based website discovery</span>
+        <span class="mx-6 text-sm font-bold">Submission status stored locally for admin export</span>
+      </div>
+    </div>
+
+    <section class="mb-12">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+        <div>
+          <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">Featured</p>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">Top 3 This Month</h3>
+        </div>
+        <p class="text-sm text-slate-500 max-w-xl">Featured placements highlight visibility, category relevance, and recent platform activity.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5" id="top3"></div>
+    </section>
+
+    <section id="rankings" class="mb-12">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+        <div>
+          <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">Directory</p>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">Full Website Ranking</h3>
+        </div>
+        <button onclick="showApplyModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg text-sm font-bold transition">
+          Submit Website
+        </button>
+      </div>
+
+      <div class="desktop-table bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[620px]">
+            <thead class="bg-slate-950 text-white">
+              <tr>
+                <th class="py-4 px-6 text-left w-24 text-sm">Rank</th>
+                <th class="py-4 px-6 text-left text-sm">Website</th>
+                <th class="py-4 px-6 text-left text-sm hidden sm:table-cell">Category</th>
+                <th class="py-4 px-6 text-center text-sm">Action</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="mobileCards" class="mobile-card space-y-3"></div>
+    </section>
+
+    <section id="methodology" class="mb-12">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-start">
+        <div>
+          <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">Methodology</p>
+          <h3 class="text-2xl sm:text-3xl font-extrabold mt-1">A clearer way to evaluate website visibility.</h3>
+          <p class="text-slate-600 mt-4 leading-relaxed">
+            LocalRank combines editorial review with measurable signals so visitors can discover relevant Indian websites and owners can present their platform professionally.
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <i class="fa-solid fa-shield-halved text-indigo-600 text-xl mb-4"></i>
+            <h4 class="font-extrabold mb-2">Verification</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Submitted websites are checked for accessibility, category fit, and basic listing quality before publication.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <i class="fa-solid fa-chart-simple text-indigo-600 text-xl mb-4"></i>
+            <h4 class="font-extrabold mb-2">Visibility Signals</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Ranking considers popularity, engagement indicators, growth trend, listing completeness, and category relevance.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <i class="fa-solid fa-layer-group text-indigo-600 text-xl mb-4"></i>
+            <h4 class="font-extrabold mb-2">Category Context</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Websites are grouped by industry so users can compare platforms in a useful and relevant way.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <i class="fa-solid fa-rotate text-indigo-600 text-xl mb-4"></i>
+            <h4 class="font-extrabold mb-2">Periodic Updates</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Rankings are reviewed periodically to keep the showcase current and fair for new submissions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8">
+        <div class="grid lg:grid-cols-[1fr_.8fr] gap-8 items-center">
+          <div>
+            <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">What is included</p>
+            <h3 class="text-2xl sm:text-3xl font-extrabold mt-1">Listing review package</h3>
+            <p class="text-slate-600 mt-3 leading-relaxed">The Rs. 14,500 fee covers submission review, listing setup, category placement, and verification workflow. Payment does not guarantee a specific rank.</p>
+            <div class="grid sm:grid-cols-2 gap-3 mt-6">
+              <p class="flex gap-3 text-sm font-semibold"><i class="fa-solid fa-check text-emerald-600 mt-1"></i> Website profile review</p>
+              <p class="flex gap-3 text-sm font-semibold"><i class="fa-solid fa-check text-emerald-600 mt-1"></i> Category placement</p>
+              <p class="flex gap-3 text-sm font-semibold"><i class="fa-solid fa-check text-emerald-600 mt-1"></i> Admin CSV export</p>
+              <p class="flex gap-3 text-sm font-semibold"><i class="fa-solid fa-check text-emerald-600 mt-1"></i> 48-hour verification target</p>
+            </div>
+          </div>
+          <div class="bg-slate-950 text-white rounded-xl p-6">
+            <p class="text-sm text-slate-300 font-semibold">One-time review fee</p>
+            <p class="text-4xl font-extrabold mt-2">Rs. 14,500</p>
+            <button onclick="showApplyModal()" class="mt-6 w-full bg-white text-slate-950 py-3 rounded-lg font-extrabold hover:bg-slate-100 transition">
+              Apply for Ranking
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="mb-12">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+        <div>
+          <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">Reviews</p>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">What website owners say</h3>
+        </div>
+        <div class="text-sm font-bold text-slate-700">
+          <span class="text-amber-500">★★★★★</span> 4.8 average rating
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <article class="bg-white border border-slate-200 rounded-xl p-6">
+          <p class="text-amber-500 font-bold mb-3">★★★★★</p>
+          <p class="text-slate-600 leading-relaxed text-sm">The listing process was simple and the page made our website look more credible to new visitors.</p>
+          <p class="font-extrabold mt-5">Aarav Mehta</p>
+          <p class="text-xs text-slate-500">Founder, SaaS Directory</p>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-xl p-6">
+          <p class="text-amber-500 font-bold mb-3">★★★★★</p>
+          <p class="text-slate-600 leading-relaxed text-sm">LocalRank helped us present our platform clearly with a professional category placement and fast verification.</p>
+          <p class="font-extrabold mt-5">Priya Nair</p>
+          <p class="text-xs text-slate-500">Marketing Lead, Edu Platform</p>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-xl p-6">
+          <p class="text-amber-500 font-bold mb-3">★★★★☆</p>
+          <p class="text-slate-600 leading-relaxed text-sm">Good experience overall. The ranking showcase is clean, mobile-friendly, and easy for users to browse.</p>
+          <p class="font-extrabold mt-5">Rohan Sinha</p>
+          <p class="text-xs text-slate-500">Owner, Tools Website</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq" class="mb-8">
+      <div class="mb-6">
+        <p class="text-sm font-extrabold text-indigo-600 uppercase tracking-wide">FAQ</p>
+        <h3 class="text-2xl sm:text-3xl font-extrabold">Common questions</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <details class="bg-white border border-slate-200 rounded-xl p-5">
+          <summary class="font-extrabold cursor-pointer">Does payment guarantee rank #1?</summary>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">No. The fee covers review, verification, and listing setup. Final placement depends on ranking signals and editorial review.</p>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl p-5">
+          <summary class="font-extrabold cursor-pointer">How long does verification take?</summary>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Most submissions are reviewed within 48 hours after payment confirmation and complete application details.</p>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl p-5">
+          <summary class="font-extrabold cursor-pointer">Which websites can apply?</summary>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Indian websites across education, tools, entertainment, commerce, community, media, and other public categories can apply.</p>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl p-5">
+          <summary class="font-extrabold cursor-pointer">Can I update my listing later?</summary>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Yes. Contact the LocalRank team with updated website details, category changes, or correction requests.</p>
+        </details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<button onclick="showApplyModal()" class="fab-pulse fixed bottom-5 right-4 sm:bottom-8 sm:right-8 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 sm:px-6 sm:py-4 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-extrabold transition-all z-50">
+  <i class="fas fa-rocket"></i>
+  <span>Get Ranked</span>
+</button>
+
+<div id="applyModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100] p-4">
+  <div class="modal-pop modal-scroll bg-white rounded-xl w-full max-w-lg shadow-2xl">
+    <div class="p-6 sm:p-8">
+      <div class="flex justify-between items-start gap-4 mb-5">
+        <div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">Apply for Ranking</h3>
+          <p class="text-slate-600 mt-1 text-sm">Listing review fee: <strong class="text-indigo-600">Rs. 14,500</strong></p>
+        </div>
+        <button onclick="closeModal()" class="text-3xl text-slate-400 hover:text-slate-700 leading-none">&times;</button>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold mb-1">Website URL <span class="text-red-500">*</span></label>
+          <input type="url" id="websiteUrl" placeholder="https://yourwebsite.com" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Website Name <span class="text-red-500">*</span></label>
+          <input type="text" id="websiteName" placeholder="Your Brand Name" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Email Address <span class="text-red-500">*</span></label>
+          <input type="email" id="email" placeholder="your@email.com" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Payer Name <span class="text-red-500">*</span></label>
+          <input type="text" id="payerName" placeholder="Rahul Sharma" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1">Category</label>
+          <select id="category" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm">
+            <option value="">Select Category</option>
+            <option value="E-Commerce">E-Commerce</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Education">Education</option>
+            <option value="Social">Social</option>
+            <option value="Tools">Tools</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500 mt-5 leading-relaxed">By submitting, you confirm that your information is accurate and understand that payment covers review and listing setup, not a guaranteed position.</p>
+      <button onclick="proceedToPayment()" class="mt-5 w-full bg-indigo-600 text-white py-4 rounded-lg text-base font-extrabold hover:bg-indigo-700 transition">
+        Proceed to Payment (Rs. 14,500)
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="paymentModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[105] p-4">
+  <div class="modal-pop modal-scroll bg-white rounded-xl w-full max-w-md shadow-2xl p-6 sm:p-8 text-center">
+    <h3 class="text-xl sm:text-2xl font-extrabold mb-1">Complete Your Payment</h3>
+    <p class="text-slate-600 mb-5 text-sm">Amount: <strong class="text-2xl sm:text-3xl text-emerald-600">Rs. 14,500</strong></p>
+    <div class="border-2 border-dashed border-slate-300 rounded-xl p-5 mb-5">
+      <p class="text-sm text-slate-500 mb-3">Scan QR Code to Pay</p>
+      <img src="14500.png" alt="Payment QR Code" class="mx-auto rounded-xl shadow-lg w-48 sm:w-60">
+      <p class="text-xs text-slate-400 mt-3">After payment, click the confirmation button below.</p>
+    </div>
+    <button onclick="confirmPayment()" class="w-full bg-emerald-600 text-white py-4 rounded-lg text-base font-extrabold hover:bg-emerald-700 transition">
+      I Have Made the Payment
+    </button>
+    <button onclick="closePaymentModal()" class="mt-3 text-slate-500 text-sm hover:text-slate-700 block w-full">Cancel</button>
+  </div>
+</div>
+
+<div id="successScreen" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110] p-4">
+  <div class="bg-white rounded-xl p-8 sm:p-10 w-full max-w-md text-center shadow-2xl">
+    <div id="loadingContent">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <p class="mt-5 text-lg sm:text-xl font-extrabold">Processing Payment...</p>
+      <p class="text-slate-500 mt-1 text-sm">Please wait a moment.</p>
+    </div>
+    <div id="successContent" class="hidden">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full mx-auto flex items-center justify-center text-3xl">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-extrabold mt-5">Details Submitted</h3>
+      <p class="text-slate-600 mt-3 text-sm sm:text-base leading-relaxed">
+        Thank you. Your payment and website details are under verification. We aim to update you within 48 hours.
+      </p>
+      <button onclick="closeAll()" class="mt-7 w-full bg-emerald-600 text-white py-4 rounded-lg font-extrabold hover:bg-emerald-700 transition">Close Window</button>
+    </div>
+  </div>
+</div>
+
+<div id="adminModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[120] p-4">
+  <div class="bg-white rounded-xl p-6 sm:p-8 w-full max-w-sm shadow-2xl">
+    <h3 class="text-xl sm:text-2xl font-extrabold mb-5">Admin Login</h3>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full px-4 py-3 border border-slate-300 rounded-lg mb-4 text-sm">
+    <button onclick="verifyAdmin()" class="w-full bg-indigo-600 text-white py-3 sm:py-4 rounded-lg font-extrabold hover:bg-indigo-700 transition">Login</button>
+    <button onclick="closeAdminModal()" class="mt-3 w-full text-slate-500 text-sm hover:text-slate-700">Cancel</button>
+  </div>
+</div>
+
+<footer class="mt-10 bg-slate-950 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-[1.2fr_.8fr] gap-8">
+      <div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold mb-3">Build trust for your next digital audience.</h3>
+        <p class="text-slate-300 max-w-2xl text-sm sm:text-base leading-relaxed">
+          LocalRank showcases noteworthy Indian websites with professional ranking pages, category context, and a clear submission workflow.
+        </p>
+      </div>
+      <div class="flex flex-wrap md:justify-end gap-4 text-sm font-bold">
+        <button onclick="showFooterMessage('about')" class="hover:text-indigo-300 transition">About</button>
+        <button onclick="showFooterMessage('ranking')" class="hover:text-indigo-300 transition">Ranking Process</button>
+        <button onclick="showFooterMessage('privacy')" class="hover:text-indigo-300 transition">Privacy</button>
+        <button onclick="showFooterMessage('contact')" class="hover:text-indigo-300 transition">Contact</button>
+      </div>
+    </div>
+    <div class="border-t border-slate-800 mt-8 pt-5 text-slate-400 text-xs sm:text-sm">
+      Copyright 2026 LocalRank. India's website discovery and ranking platform.
+    </div>
+  </div>
+</footer>
+
+<div id="footerModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[150] p-4">
+  <div class="modal-pop modal-scroll bg-white rounded-xl w-full max-w-lg p-6 sm:p-8 shadow-2xl">
+    <h3 id="footerTitle" class="text-xl sm:text-2xl font-extrabold mb-3"></h3>
+    <p id="footerText" class="text-slate-600 leading-relaxed text-sm sm:text-base"></p>
+    <button onclick="closeFooterModal()" class="mt-7 w-full bg-indigo-600 text-white py-3 sm:py-4 rounded-lg font-extrabold hover:bg-indigo-700 transition">
+      Got It
+    </button>
+  </div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "vishk123";
+
+const websites = [
+  { rank: 1, name: "QRs World", domain: "qrs-world.netlify.app", category: "Advertising", logo: "fa-qrcode", color: "from-blue-500 to-cyan-500" },
+  { rank: 2, name: "Delhi Hooks", domain: "delhi-hooks.netlify.app", category: "Entertainment", logo: "fa-play", color: "from-red-500 to-pink-500" },
+  { rank: 3, name: "PDF Vault", domain: "pdf-gallery.netlify.app", category: "Education", logo: "fa-file-pdf", color: "from-orange-500 to-amber-500" },
+  { rank: 4, name: "Vegamovies", domain: "vegamovies.diamonds", category: "Entertainment", logo: "fa-film", color: "from-yellow-500 to-orange-500" },
+  { rank: 5, name: "Hooks Arena", domain: "hooks-arena.vercel.app", category: "Social", logo: "fa-users", color: "from-pink-500 to-purple-500" },
+  { rank: 6, name: "South Freak", domain: "southfreak.ink", category: "Entertainment", logo: "fa-video", color: "from-red-600 to-rose-500" },
+  { rank: 7, name: "QRs Gallery", domain: "qrs-world.netlify.app", category: "Social", logo: "fa-images", color: "from-emerald-500 to-teal-500" },
+  { rank: 8, name: "Hdhub4u", domain: "hdhub4u.glass", category: "Entertainment", logo: "fa-tv", color: "from-indigo-500 to-blue-500" },
+  { rank: 9, name: "Site Comparison", domain: "www.site24x7.com/tools/website-comparison.html", category: "Tools", logo: "fa-scale-balanced", color: "from-violet-500 to-purple-500" },
+  { rank: 10, name: "Bili Bili", domain: "www.bilibili.com", category: "Entertainment", logo: "fa-clapperboard", color: "from-red-500 to-orange-500" }
+];
+
+function hrefFor(domain) {
+  return domain.startsWith("http") ? domain : `https://${domain}`;
+}
+
+function renderTop3() {
+  const container = document.getElementById("top3");
+  websites.slice(0, 3).forEach(site => {
+    const card = document.createElement("article");
+    card.className = "bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow";
+    card.innerHTML = `
+      <div class="flex justify-between items-start mb-5">
+        <span class="rank-badge text-2xl w-12 h-12 flex items-center justify-center rounded-lg">${site.rank}</span>
+        <span class="w-12 h-12 rounded-lg bg-gradient-to-r ${site.color} text-white flex items-center justify-center text-xl">
+          <i class="fa-solid ${site.logo}"></i>
+        </span>
+      </div>
+      <h4 class="text-lg font-extrabold mb-1">${site.name}</h4>
+      <p class="text-slate-400 text-xs truncate">${site.domain}</p>
+      <div class="mt-4 inline-block px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-bold rounded-lg">${site.category}</div>
+      <a href="${hrefFor(site.domain)}" target="_blank" rel="noopener" class="mt-5 block w-full text-center py-3 bg-slate-950 hover:bg-black transition text-white rounded-lg font-bold text-sm">
+        Visit Website
+      </a>`;
+    container.appendChild(card);
+  });
+}
+
+function renderRankings() {
+  const tbody = document.getElementById("rankingBody");
+  websites.forEach((site, index) => {
+    const row = document.createElement("tr");
+    row.className = "table-row fade-in transition-all";
+    row.style.animationDelay = `${index * 65}ms`;
+    const rankCell = site.rank === 8
+      ? `<span onclick="showAdminLogin()" class="admin-rank rank-badge px-4 py-2 rounded-lg text-sm cursor-pointer">${site.rank}</span>`
+      : `<span class="rank-badge px-4 py-2 rounded-lg text-sm">${site.rank}</span>`;
+
+    row.innerHTML = `
+      <td class="py-5 px-6">${rankCell}</td>
+      <td class="py-5 px-6">
+        <div class="flex items-center gap-4">
+          <span class="w-10 h-10 rounded-lg bg-gradient-to-r ${site.color} text-white flex items-center justify-center shrink-0">
+            <i class="fa-solid ${site.logo}"></i>
+          </span>
+          <div>
+            <div class="font-extrabold text-base">${site.name}</div>
+            <div class="text-slate-400 text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">${site.domain}</div>
+          </div>
+        </div>
+      </td>
+      <td class="py-5 px-6 hidden sm:table-cell">
+        <span class="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-xs font-bold">${site.category}</span>
+      </td>
+      <td class="py-5 px-6 text-center">
+        <a href="${hrefFor(site.domain)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2.5 rounded-lg hover:bg-indigo-700 transition font-bold text-xs whitespace-nowrap">
+          Visit <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+        </a>
+      </td>`;
+    tbody.appendChild(row);
+  });
+}
+
+function renderMobileCards() {
+  const container = document.getElementById("mobileCards");
+  websites.forEach((site, index) => {
+    const card = document.createElement("article");
+    card.className = "fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex items-center gap-3";
+    card.style.animationDelay = `${index * 55}ms`;
+    const rankHtml = site.rank === 8
+      ? `<span onclick="showAdminLogin()" class="admin-rank rank-badge w-10 h-10 flex items-center justify-center rounded-lg text-sm shrink-0 cursor-pointer">${site.rank}</span>`
+      : `<span class="rank-badge w-10 h-10 flex items-center justify-center rounded-lg text-sm shrink-0">${site.rank}</span>`;
+    card.innerHTML = `
+      ${rankHtml}
+      <span class="w-10 h-10 rounded-lg bg-gradient-to-r ${site.color} text-white flex items-center justify-center shrink-0">
+        <i class="fa-solid ${site.logo}"></i>
+      </span>
+      <div class="flex-1 min-w-0">
+        <div class="font-extrabold text-sm">${site.name}</div>
+        <div class="text-slate-400 text-xs truncate">${site.domain}</div>
+        <span class="inline-block mt-1 px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">${site.category}</span>
+      </div>
+      <a href="${hrefFor(site.domain)}" target="_blank" rel="noopener" class="shrink-0 bg-indigo-600 text-white px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap">
+        Visit
+      </a>`;
+    container.appendChild(card);
+  });
+}
+
+function showApplyModal() { document.getElementById("applyModal").classList.remove("hidden"); }
+function closeModal() { document.getElementById("applyModal").classList.add("hidden"); }
+function closePaymentModal() { document.getElementById("paymentModal").classList.add("hidden"); }
+
+function proceedToPayment() {
+  const url = document.getElementById("websiteUrl").value.trim();
+  const name = document.getElementById("websiteName").value.trim();
+  const mail = document.getElementById("email").value.trim();
+  const payer = document.getElementById("payerName").value.trim();
+  if (!url || !name || !mail || !payer) {
+    alert("Please fill all mandatory fields marked with *.");
+    return;
+  }
+  closeModal();
+  document.getElementById("paymentModal").classList.remove("hidden");
+}
+
+function confirmPayment() {
+  closePaymentModal();
+  const successScreen = document.getElementById("successScreen");
+  successScreen.classList.remove("hidden");
+  document.getElementById("loadingContent").classList.remove("hidden");
+  document.getElementById("successContent").classList.add("hidden");
+
+  setTimeout(() => {
+    document.getElementById("loadingContent").classList.add("hidden");
+    document.getElementById("successContent").classList.remove("hidden");
+
+    const submission = {
+      timestamp: new Date().toLocaleString("en-IN"),
+      websiteName: document.getElementById("websiteName").value.trim(),
+      websiteUrl: document.getElementById("websiteUrl").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      payerName: document.getElementById("payerName").value.trim(),
+      category: document.getElementById("category").value || "Others",
+      amount: "Rs. 14,500",
+      status: "Payment Done - Pending Verification"
+    };
+
+    try {
+      const submissions = JSON.parse(localStorage.getItem("localRankApplications")) || [];
+      submissions.unshift(submission);
+      localStorage.setItem("localRankApplications", JSON.stringify(submissions));
+    } catch (error) {}
+  }, 1800);
+}
+
+function closeAll() {
+  ["applyModal", "paymentModal", "successScreen"].forEach(id => document.getElementById(id).classList.add("hidden"));
+}
+
+function showAdminLogin() {
+  document.getElementById("adminModal").classList.remove("hidden");
+  document.getElementById("adminPassword").value = "";
+}
+function closeAdminModal() { document.getElementById("adminModal").classList.add("hidden"); }
+
+function verifyAdmin() {
+  if (document.getElementById("adminPassword").value === ADMIN_PASSWORD) {
+    closeAdminModal();
+    exportToCSV();
+  } else {
+    alert("Incorrect password.");
+  }
+}
+
+function exportToCSV() {
+  try {
+    const data = JSON.parse(localStorage.getItem("localRankApplications")) || [];
+    if (!data.length) {
+      alert("No submissions yet.");
+      return;
+    }
+    let csv = "Timestamp,Website Name,Website URL,Email,Payer Name,Category,Amount,Status\n";
+    data.forEach(row => {
+      csv += `"${row.timestamp}","${row.websiteName}","${row.websiteUrl}","${row.email}","${row.payerName}","${row.category}","${row.amount}","${row.status}"\n`;
+    });
+    const anchor = document.createElement("a");
+    anchor.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    anchor.download = `LocalRank_Submissions_${new Date().toISOString().slice(0, 10)}.csv`;
+    anchor.click();
+    alert(`Exported ${data.length} submissions.`);
+  } catch (error) {
+    alert("Export failed: " + error.message);
+  }
+}
+
+function showFooterMessage(type) {
+  const map = {
+    about: ["About LocalRank", "LocalRank is a website discovery and ranking showcase for Indian digital platforms. It helps visitors find websites by category and helps owners present their platform with a professional listing."],
+    ranking: ["Ranking Process", "Ranking positions are reviewed using visibility, engagement indicators, category relevance, platform activity, and editorial quality checks. Paid submission covers review and setup, not a guaranteed rank."],
+    privacy: ["Privacy Policy", "Submitted information is used for application review, payment verification, support, and listing communication. LocalRank does not sell submitted contact information."],
+    contact: ["Contact Us", "For ranking support, listing corrections, partnerships, or payment verification, contact the LocalRank team. Standard response time is within 48 hours."]
+  };
+  document.getElementById("footerTitle").innerText = map[type][0];
+  document.getElementById("footerText").innerText = map[type][1];
+  document.getElementById("footerModal").classList.remove("hidden");
+}
+function closeFooterModal() { document.getElementById("footerModal").classList.add("hidden"); }
+
+renderTop3();
+renderRankings();
+renderMobileCards();
+</script>
+</body>
+</html>
